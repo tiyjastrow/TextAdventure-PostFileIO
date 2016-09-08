@@ -1,18 +1,19 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
  * Created by johnjastrow on 3/30/16.
  */
 public class Player extends Character {
-    String weapon;
-    String location;
+    private String weapon;
+    private String location;
 
     public Player() {
         this.health = 20;
         this.damage = 20;
     }
 
-    ArrayList<String> items = new ArrayList<>();
+    private ArrayList<String> items = new ArrayList<>();
 
     public void chooseName() {
         System.out.println("What is your name?");
@@ -57,6 +58,30 @@ public class Player extends Character {
             items.add(item);
             System.out.println("You picked up an item!");
         }
+    }
+
+    public String getWeapon() {
+        return weapon;
+    }
+
+    public void setWeapon(String weapon) {
+        this.weapon = weapon;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public ArrayList<String> getItems() {
+        return items;
+    }
+
+    public void setItems(ArrayList<String> items) {
+        this.items = items;
     }
 
     public void battle(Character enemy) {
