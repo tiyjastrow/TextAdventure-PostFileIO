@@ -1,48 +1,82 @@
+import java.util.ArrayList;
+
 /**
  * Created by johnjastrow on 3/30/16.
  */
-public class Player {
-    String name;
+public class Player extends Character {
     String weapon;
     String location;
 
-    public void chooseName() {
-        Game.print("What is your name? ");
-        this.name = Game.scanner.nextLine();
+    public Player() {
+        this.health = 20;
+        this.damage = 20;
+    }
 
-        Game.print("Welcome, " + name);
+    ArrayList<String> items = new ArrayList<>();
+
+    public void chooseName() {
+        System.out.println("What is your name?");
+        name = Game.nextLine();
+        System.out.println("Welcome, " + name);
     }
 
     public void chooseWeapon() throws Exception {
-        Game.print("Choose your weapon [sword/mace]: ");
-        this.weapon = Game.scanner.nextLine();
+        System.out.println("Choose your weapon [sword/mace]");
+        weapon = Game.nextLine();
 
         if (weapon.equalsIgnoreCase("sword")) {
-            Game.print("A sword is a fine choice!");
-            Game.print("something happens here");
+            System.out.println("A sword is a fine choice!");
         }
         else if (weapon.equalsIgnoreCase("mace")) {
-            Game.print("A mace is a really fine choice!");
+            System.out.println("A mace is a fine choice!");
         }
         else {
-            throw new Exception("no weapon? What are you going to fight with your bare hands?");
+            throw new Exception("Invalid weapon.");
         }
     }
 
     public void chooseLocation() throws Exception {
-        Game.print("Choose your location [forest/tunnel]");
-        this.location = Game.scanner.nextLine();
+        System.out.println("Choose your location [forest/tunnel]");
+        location = Game.nextLine();
 
         if (location.equalsIgnoreCase("forest")) {
-            Game.print("Now entering the dangerous forest.");
+            System.out.println("Entering forest...");
         }
         else if (location.equalsIgnoreCase("tunnel")) {
-            Game.print("Entering dark tunnel. LOOK OUT!!");
+            System.out.println("Entering tunnel...");
         }
         else {
-            throw new Exception("You can't go that way. Go back!");
+            throw new Exception("Invalid location.");
         }
     }
 
+    public void findItem(String item) {
+        System.out.println("You found a " + item + "! Pick it up? [y/n]");
+        String answer = Game.nextLine();
+        if (answer.equalsIgnoreCase("y")) {
+            items.add(item);
+            System.out.println("You picked up an item!");
+        }
+    }
 
+    public void battle(Character enemy) {
+        System.out.printf("%s appears!\n", enemy.name);
+
+        while (health > 0 && enemy.health > 0) {
+            health -= enemy.damage;
+            enemy.health -= damage;
+            System.out.printf("%s's health: %d\n", name, health);
+            System.out.printf("%s's health: %d\n", enemy.name, enemy.health);
+        }
+
+        String message = "%s has died.\n";
+
+        if (health <= 0) {
+            System.out.printf(message, name);
+        }
+
+        if (enemy.health <= 0) {
+            System.out.printf(message, enemy.name);
+        }
+    }
 }
